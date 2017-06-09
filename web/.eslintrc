@@ -6,7 +6,12 @@
     "react/jsx-filename-extension": 0,
     "import/prefer-default-export": 0,
     "react/no-unused-prop-types": 0,
-    "camelcase": 0
+    "react/prefer-stateless-function": 0,
+    "camelcase": 0,
+    "semi": 0,
+    "space-before-blocks": 0,
+    "keyword-spacing": 0,
+    "comma-dangle": 0
   },
   "globals": {
     "fetch": true,
