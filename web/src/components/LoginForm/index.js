@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 class LoginForm extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.boolean.isRequired,
+    submitting: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.string.isRequired
   }
 
