@@ -15,9 +15,14 @@ const styles = StyleSheet.create({
 
 class SignupForm extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func,
     submitting: PropTypes.bool.isRequired,
-    handleSubmit: PropTypes.string.isRequired
+    handleSubmit: PropTypes.func
+  }
+
+  static defaultProps = {
+    onSubmit: () => {},
+    handleSubmit: () => {}
   }
 
   handleSubmit = (data) => {
@@ -55,7 +60,7 @@ class SignupForm extends Component {
         />
         <button
           type="submit"
-          disable={submitting}
+          disabled={submitting}
           className="btn btn-block btn-primary"
         >
           { submitting ? 'Submitting...' : 'Sign up' }

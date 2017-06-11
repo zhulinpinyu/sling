@@ -3,12 +3,19 @@ import PropTypes from 'prop-types'
 
 class Input extends Component {
   static propTypes = {
-    input: PropTypes.shape.isRequired,
-    label: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    style: PropTypes.shape.isRequired,
-    meta: PropTypes.shape.isRequired
+    input: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    type: PropTypes.string,
+    placeholder: PropTypes.string,
+    style: PropTypes.object,
+    meta: PropTypes.object.isRequired
+  }
+
+  static defaultProps = {
+    style: {},
+    label: '',
+    type: '',
+    placeholder: ''
   }
 
   render(){

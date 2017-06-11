@@ -8,11 +8,11 @@ import SignupForm from '../../components/SignupForm'
 
 class Signup extends Component {
   static contextTypes = {
-    router: PropTypes.shape.isReqiured
+    router: PropTypes.object
   }
 
   static propTypes = {
-    signup: PropTypes.func.isReqiured
+    signup: PropTypes.func
   }
 
   static defaultProps = {

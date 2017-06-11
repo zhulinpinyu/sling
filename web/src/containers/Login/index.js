@@ -8,11 +8,11 @@ import LoginForm from '../../components/LoginForm'
 
 class Login extends Component {
   static contextTypes = {
-    router: PropTypes.shape.isReqiured
+    router: PropTypes.object
   }
 
   static propTypes = {
-    login: PropTypes.func.isReqiured
+    login: PropTypes.func
   }
 
   static defaultProps = {
@@ -27,7 +27,7 @@ class Login extends Component {
     return (
       <div style={{ flex: 1 }}>
         <Navbar />
-        <LoginForm onSubmit={this.handleSubmit} />
+        <LoginForm onSubmit={this.handleLogin} />
       </div>
     )
   }
