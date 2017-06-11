@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
+import { login } from '../../actions/session'
 import Navbar from '../../components/Navbar'
 import LoginForm from '../../components/LoginForm'
 
@@ -9,12 +11,16 @@ class Login extends Component {
     router: PropTypes.shape.isReqiured
   }
 
-  // static propTypes = {
-  //   login: PropTypes.func.isReqiured
-  // }
+  static propTypes = {
+    login: PropTypes.func.isReqiured
+  }
 
-  handleLogin = () => {
-    // this.props.login(data, this.context.router)
+  static defaultProps = {
+    login: () => {}
+  }
+
+  handleLogin = (data) => {
+    this.props.login(data, this.context.router)
   }
 
   render() {
@@ -27,4 +33,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default connect(null, { login })(Login)
