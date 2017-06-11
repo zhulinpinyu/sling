@@ -1,11 +1,30 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Match, Miss } from 'react-router'
+import { connect } from 'react-redux'
+import { PropTypes } from 'prop-types'
+
 import Home from '../Home'
 import NotFound from '../../components/NotFound'
 import Login from '../Login'
 import Signup from '../Signup'
+import { authenticate } from '../../actions/session'
 
 class App extends Component {
+  static propTypes = {
+    authenticate: PropTypes.func
+  }
+
+  static defaultProps = {
+    authenticate: () => {}
+  }
+
+  componentDidMount(){
+    const token = localStorage.getItem('token')
+    if(token){
+      this.props.authenticate()
+    }
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -20,4 +39,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect(null, { authenticate })(App)
