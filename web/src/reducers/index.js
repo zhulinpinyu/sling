@@ -2,10 +2,12 @@ import { combineReducers } from 'redux'
 import { reducer as form } from 'redux-form'
 
 import session from './session'
+import rooms from './rooms'
 
 const appReducer = combineReducers({
   form,
-  session
+  session,
+  rooms
 })
 
 export default (state, action) => {
