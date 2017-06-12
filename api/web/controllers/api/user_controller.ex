@@ -3,7 +3,7 @@ defmodule Sling.UserController do
 
   alias Sling.User
 
-  Plug Guardian.plug.EnsuredAuthenticed, [handler: Sling.SessionController] when action in [:rooms]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Sling.SessionController] when action in [:rooms]
 
   def create(conn, params) do
     changeset = User.registration_changeset(%User{}, params)
