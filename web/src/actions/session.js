@@ -33,11 +33,19 @@ export const logout = router =>
       router.transitionTo('/')
     })
 
-export const authenticate = () =>
-  dispatch => api.post('/sessions/refresh')
+export const authenticate = () => {
+  return (dispatch) => {
+    dispatch({ type: 'AUTHENTICATION_REQUEST' })
+    api.post('/sessions/refresh')
     .then((response) => {
       setCurrentUser(dispatch, response)
     }).catch(() => {
       localStorage.removeItem('token')
       window.location = '/login'
     })
+  }
+}
+
+export const unauthenticate = () => {
+  return { type: 'AUTHENTICATION_FAILURE' }
+}

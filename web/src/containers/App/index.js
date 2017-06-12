@@ -10,23 +10,27 @@ import RedirectAuthenticated from '../../components/RedirectAuthenticated'
 import Login from '../Login'
 import Signup from '../Signup'
 
-import { authenticate } from '../../actions/session'
+import { authenticate, unauthenticate } from '../../actions/session'
 
 class App extends Component {
   static propTypes = {
     authenticate: PropTypes.func,
+    unauthenticate: PropTypes.func,
     isAuthenticated: PropTypes.bool.isRequired,
     willAuthenticate: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
-    authenticate: () => {}
+    authenticate: () => {},
+    unauthenticate: () => {}
   }
 
   componentDidMount(){
     const token = localStorage.getItem('token')
     if(token){
       this.props.authenticate()
+    } else {
+      this.props.unauthenticate()
     }
   }
 
@@ -49,8 +53,8 @@ class App extends Component {
 const mapStateToProps = ({ session }) => {
   return {
     isAuthenticated: session.isAuthenticated,
-    willAuthenticate: session.willAuthenticate || false
+    willAuthenticate: session.willAuthenticate
   }
 }
 
-export default connect(mapStateToProps, { authenticate })(App)
+export default connect(mapStateToProps, { authenticate, unauthenticate })(App)
