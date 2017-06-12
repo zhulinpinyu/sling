@@ -21,7 +21,7 @@ class RedirectAuthenticated extends Component {
       exactly,
       isAuthenticated,
       willAuthenticate,
-      component
+      component: CComponent
     } = this.props
     return (
       <Match
@@ -30,7 +30,7 @@ class RedirectAuthenticated extends Component {
         render={(props) => {
           if(isAuthenticated) return <Redirect to={{ pathname: '/' }} />
           if(willAuthenticate) return null
-          if(!isAuthenticated && !willAuthenticate) return <component {...props} />
+          if(!isAuthenticated && !willAuthenticate) return <CComponent {...props} />
           return null
         }}
       />

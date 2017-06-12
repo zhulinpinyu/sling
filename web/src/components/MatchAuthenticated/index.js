@@ -21,14 +21,14 @@ class MatchAuthenticated extends Component {
       exactly,
       isAuthenticated,
       willAuthenticate,
-      component
+      component: CComponent
     } = this.props
     return (
       <Match
         exactly={exactly}
         pattern={pattern}
         render={(props) => {
-          if(isAuthenticated) return <component {...props} />
+          if(isAuthenticated) return <CComponent {...props} />
           if(willAuthenticate) return null
           if(!isAuthenticated && !willAuthenticate) return <Redirect to={{ pathname: '/login' }} />
           return null
