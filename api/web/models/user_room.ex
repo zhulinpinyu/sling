@@ -13,7 +13,8 @@ defmodule Sling.UserRoom do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [])
-    |> validate_required([])
+    |> cast(params, [:user_id, :room_id])
+    |> validate_required([:user_id, :room_id])
+    |> unique_constraint(:user_id_room_id)
   end
 end
