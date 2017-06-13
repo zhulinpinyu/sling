@@ -1,6 +1,6 @@
 const INIT_STATE = {
   all: [],
-  currentRooms: []
+  currentUserRooms: []
 }
 
 export default (state = INIT_STATE, action) => {
@@ -13,12 +13,12 @@ export default (state = INIT_STATE, action) => {
     case 'FETCH_USER_ROOMS_SUCCESS':
       return {
         ...state,
-        currentRooms: action.payload.data
+        currentUserRooms: action.payload.data
       }
     case 'CREATE_ROOM_SUCCESS':
       return {
         ...state,
-        currentRooms: [
+        currentUserRooms: [
           ...state.currentRooms,
           action.payload.data
         ],
@@ -30,7 +30,7 @@ export default (state = INIT_STATE, action) => {
     case 'JOINED_ROOM':
       return {
         ...state,
-        currentRooms: [
+        currentUserRooms: [
           ...state.currentRooms,
           action.payload.data
         ]

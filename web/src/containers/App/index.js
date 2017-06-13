@@ -7,22 +7,28 @@ import Home from '../Home'
 import NotFound from '../../components/NotFound'
 import MatchAuthenticated from '../../components/MatchAuthenticated'
 import RedirectAuthenticated from '../../components/RedirectAuthenticated'
+import Sidebar from '../../components/Sidebar'
 import Login from '../Login'
 import Signup from '../Signup'
+import Room from '../Room'
 
-import { authenticate, unauthenticate } from '../../actions/session'
+import { authenticate, unauthenticate, logout } from '../../actions/session'
 
 class App extends Component {
   static propTypes = {
     authenticate: PropTypes.func,
     unauthenticate: PropTypes.func,
     isAuthenticated: PropTypes.bool.isRequired,
-    willAuthenticate: PropTypes.bool.isRequired
+    willAuthenticate: PropTypes.bool.isRequired,
+    logout: PropTypes.func,
+    currentUserRooms: PropTypes.array
   }
 
   static defaultProps = {
     authenticate: () => {},
-    unauthenticate: () => {}
+    unauthenticate: () => {},
+    logout: () => {},
+    currentUserRooms: []
   }
 
   componentDidMount(){
@@ -34,27 +40,43 @@ class App extends Component {
     }
   }
 
+  handleLogout = router => this.props.logout(router)
+
   render() {
-    const { isAuthenticated, willAuthenticate } = this.props
+    const { isAuthenticated, willAuthenticate, currentUserRooms } = this.props
     const authProps = { isAuthenticated, willAuthenticate }
     return (
       <BrowserRouter>
-        <div style={{ display: 'flex', flex: 1 }}>
-          <MatchAuthenticated exactly pattern="/" component={Home} {...authProps} />
-          <RedirectAuthenticated pattern="/login" component={Login} {...authProps} />
-          <RedirectAuthenticated pattern="/signup" component={Signup} {...authProps} />
-          <Miss component={NotFound} />
-        </div>
+        {
+          ({ router }) => (
+            <div style={{ display: 'flex', flex: 1 }}>
+              {
+                isAuthenticated &&
+                <Sidebar
+                  router={router}
+                  rooms={currentUserRooms}
+                  onLogoutClick={this.handleLogout}
+                />
+              }
+              <MatchAuthenticated exactly pattern="/" component={Home} {...authProps} />
+              <RedirectAuthenticated pattern="/login" component={Login} {...authProps} />
+              <RedirectAuthenticated pattern="/signup" component={Signup} {...authProps} />
+              <MatchAuthenticated pattern="/r/:id" component={Room} {...authProps} />
+              <Miss component={NotFound} />
+            </div>
+          )
+        }
       </BrowserRouter>
     )
   }
 }
 
-const mapStateToProps = ({ session }) => {
+const mapStateToProps = ({ session, rooms }) => {
   return {
     isAuthenticated: session.isAuthenticated,
-    willAuthenticate: session.willAuthenticate
+    willAuthenticate: session.willAuthenticate,
+    currentUserRooms: rooms.currentUserRooms
   }
 }
 
-export default connect(mapStateToProps, { authenticate, unauthenticate })(App)
+export default connect(mapStateToProps, { authenticate, unauthenticate, logout })(App)
