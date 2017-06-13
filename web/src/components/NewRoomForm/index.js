@@ -6,7 +6,7 @@ class NewRoomForm extends Component {
 
   static propTypes = {
     onSubmit: PropTypes.func,
-    handleSubmit: PropTypes,
+    handleSubmit: PropTypes.func,
     submitting: PropTypes.bool.isRequired
   }
 
