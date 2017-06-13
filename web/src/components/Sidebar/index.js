@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   sidebar: {
     display: 'flex',
     flexDirection: 'column',
-    color: 'rgb(38,28,37)'
+    background: 'rgb(38,28,37)'
   },
   link: {
     position: 'relative',
