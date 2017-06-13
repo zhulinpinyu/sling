@@ -84,7 +84,7 @@ class Sidebar extends Component {
         </Link>
         <div style={{ flex: '1' }} />
         <button
-          onClick={this.props.onLogoutClick(this.props.router)}
+          onClick={() => this.props.onLogoutClick(this.props.router)}
           className={css(styles.link, styles.logoutButton)}
         >
           <div className={css(styles.badge)}>
