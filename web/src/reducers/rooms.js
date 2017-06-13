@@ -19,7 +19,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         currentUserRooms: [
-          ...state.currentRooms,
+          ...state.currentUserRooms,
           action.payload.data
         ],
         all: [
@@ -31,7 +31,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         currentUserRooms: [
-          ...state.currentRooms,
+          ...state.currentUserRooms,
           action.payload.data
         ]
       }
