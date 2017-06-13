@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Miss } from 'react-router'
 import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Home from '../Home'
 import NotFound from '../../components/NotFound'
@@ -12,7 +12,11 @@ import Login from '../Login'
 import Signup from '../Signup'
 import Room from '../Room'
 
-import { authenticate, unauthenticate, logout } from '../../actions/session'
+import {
+  logout,
+  authenticate,
+  unauthenticate
+} from '../../actions/session'
 
 class App extends Component {
   static propTypes = {
