@@ -2,21 +2,30 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { connectToChannel, leaveChannel } from '../../actions/room'
+import { connectToChannel, leaveChannel, createMessage } from '../../actions/room'
+import RoomNavBar from '../../components/RoomNavBar'
+import MessageList from '../../components/MessageList'
+import MessageForm from '../../components/MessageForm'
 
 class Room extends Component {
   static propTypes = {
     params: PropTypes.object,
     connectToChannel: PropTypes.func,
     leaveChannel: PropTypes.func,
+    createMessage: PropTypes.func,
     socket: PropTypes.any,
-    channel: PropTypes.any
+    channel: PropTypes.any,
+    room: PropTypes.object,
+    messages: PropTypes.array
   }
 
   static defaultProps = {
     params: {},
     connectToChannel: () => {},
     leaveChannel: () => {},
+    createMessage: () => {},
+    room: {},
+    messages: [],
     socket: null,
     channel: null
   }
@@ -43,9 +52,18 @@ class Room extends Component {
     this.props.leaveChannel(this.props.channel)
   }
 
+  handleMessageCreate = data => this.props.createMessage(data)
+
   render() {
+    const { room, messages } = this.props
     return (
-      <div>Room: {this.props.params.id}</div>
+      <div style={{ display: 'flex', height: '100vh' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <RoomNavBar room={room} />
+          <MessageList messages={messages} />
+          <MessageForm onSubmit={this.handleMessageCreate} />
+        </div>
+      </div>
     )
   }
 }
@@ -54,11 +72,13 @@ const mapStateToProps = ({ session, room }) => {
   return {
     socket: session.socket,
     room: room.currentRoom,
-    channel: room.channel
+    channel: room.channel,
+    messages: room.messages
   }
 }
 
 export default connect(mapStateToProps, {
   connectToChannel,
-  leaveChannel
+  leaveChannel,
+  createMessage
 })(Room)
