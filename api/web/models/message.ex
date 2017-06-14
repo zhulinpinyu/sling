@@ -14,7 +14,7 @@ defmodule Sling.Message do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:text])
-    |> validate_required([:text])
+    |> cast(params, [:text, :user_id, :room_id])
+    |> validate_required([:text, :user_id, :room_id])
   end
 end
