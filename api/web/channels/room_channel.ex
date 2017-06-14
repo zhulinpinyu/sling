@@ -11,9 +11,9 @@ defmodule Sling.RoomChannel do
             |> Sling.Repo.paginate()
 
     response = %{
-      room: Phoenix.View.render_one(room, Sling.RoomView, "room.json")
-      messages: Phoenix.View.render_many(page.enties, Sling.MessageView, "message.json"),
-      pagination: Sling.PageinationHelpers.pagination(page)
+      room: Phoenix.View.render_one(room, Sling.RoomView, "room.json"),
+      messages: Phoenix.View.render_many(page.entries, Sling.MessageView, "message.json"),
+      pagination: Sling.PaginationHelpers.pagination(page)
     }
 
     {:ok, response, assign(socket, :room, room)}

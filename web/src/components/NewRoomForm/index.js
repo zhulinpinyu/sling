@@ -30,7 +30,7 @@ class NewRoomForm extends Component {
             className="form-control"
           />
           <div className="input-group-btn">
-            <button type="submit" className="btn btn-primsry" disabled={submitting}>
+            <button type="submit" className="btn btn-primary" disabled={submitting}>
               { submitting ? 'Saving...' : 'Submit' }
             </button>
           </div>
