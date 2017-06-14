@@ -21,7 +21,7 @@ defmodule Sling.UserSocket do
     end
   end
 
-  def connect(_params, _socket) do: :error
+  def connect(_params, _socket), do: :error
 
   def id(socket), do: "users_socket:#{socket.assigns.current_user.id}"
 
