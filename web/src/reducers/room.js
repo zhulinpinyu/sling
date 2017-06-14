@@ -1,6 +1,7 @@
 const INIT_STATE = {
   channel: null,
-  currentRoom: {}
+  currentRoom: {},
+  messages: []
 }
 
 export default (state = INIT_STATE, action) => {
@@ -9,10 +10,19 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         channel: action.payload.channel,
-        currentRoom: action.payload.room
+        currentRoom: action.payload.room,
+        messages: action.payload.messages.reverse()
       }
     case 'USER_LEFT_ROOM':
       return INIT_STATE
+    case 'MESSAGE_CREATED':
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          action.payload.message
+        ]
+      }
     default:
       return state
   }

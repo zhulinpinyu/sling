@@ -3,12 +3,20 @@ export const connectToChannel = (socket, roomId) => {
     if(!socket) return false
     const channel = socket.channel(`room:${roomId}`)
 
+    channel.on('message_created', (message) => {
+      dispatch({
+        type: 'MESSAGE_CREATED',
+        payload: { message }
+      })
+    })
+
     channel.join().receive('ok', (response) => {
       dispatch({
         type: 'ROOM_CONNECT_TO_CHANNEL',
         payload: {
           channel,
-          room: response.room
+          room: response.room,
+          messages: response.messages
         }
       })
     })
