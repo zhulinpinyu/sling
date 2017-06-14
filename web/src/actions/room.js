@@ -38,9 +38,9 @@ export const leaveChannel = (channel) => {
 }
 
 export const createMessage = (channel, data) => {
-  return dispatch => new Promise((reslove, reject) => {
+  return dispatch => new Promise((resolve, reject) => {
     channel.push('new_message', data)
-      .receive('ok', () => reslove(
+      .receive('ok', () => resolve(
         dispatch(reset('newMessage'))
       ))
       .receive('error', () => reject())
