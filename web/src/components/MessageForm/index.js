@@ -13,10 +13,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(214,214,214)'
   },
   button: {
-    color: 'rgb(80,80,80)',
-    borderWidth: '2px',
-    borderColor: 'rgb(214,214,214)',
-    background: 'rgb(214,214,214)'
+    color: '#9e9e9e',
+    background: 'rgb(38,28,37)'
   }
 })
 
