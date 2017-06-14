@@ -37,9 +37,10 @@ defmodule Sling.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:comeonin, "~> 3.0"},
-      {:guardian, "~> 0.14.4"},
-      {:cors_plug, "~> 1.3"}
+      {:comeonin, "~> 3.0"}, #password hash
+      {:guardian, "~> 0.14.4"}, #jwt auth
+      {:cors_plug, "~> 1.3"}, #cors cross domain
+      {:scrivener, "~> 2.3"} #list pagination
     ]
   end
 
