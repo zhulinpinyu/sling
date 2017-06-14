@@ -66,7 +66,7 @@ class MessageList extends Component {
       days.push({ date: key, messages: value })
     })
     const today = moment().format('MMMM Do')
-    const yestoday = moment().subtrcat(1, 'days').format('MMMM Do')
+    const yestoday = moment().subtract(1, 'days').format('MMMM Do')
     return days.map((day) => {
       return (
         <div key={day.date}>

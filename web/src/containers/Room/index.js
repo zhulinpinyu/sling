@@ -52,7 +52,7 @@ class Room extends Component {
     this.props.leaveChannel(this.props.channel)
   }
 
-  handleMessageCreate = data => this.props.createMessage(data)
+  handleMessageCreate = data => this.props.createMessage(this.props.channel, data)
 
   render() {
     const { room, messages } = this.props
