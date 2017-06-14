@@ -5,7 +5,7 @@ defmodule Sling.RoomChannel do
     room = Repo.get!(Sling.Room, room_id)
 
     page = Sling.Message
-            |> where([m], m.id == ^room.id)
+            |> where([m], m.room_id == ^room.id)
             |> order_by(desc: :inserted_at, desc: :id)
             |> preload(:user)
             |> Sling.Repo.paginate()
