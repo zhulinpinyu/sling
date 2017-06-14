@@ -9,7 +9,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         channel: action.payload.channel,
-        room: action.payload.room
+        currentRoom: action.payload.room
       }
     case 'USER_LEFT_ROOM':
       return INIT_STATE
