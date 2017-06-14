@@ -1,7 +1,8 @@
 const INIT_STATE = {
   isAuthenticated: false,
   willAuthenticate: true,
-  currentUser: {}
+  currentUser: {},
+  socket: null
 }
 
 export default (state = INIT_STATE, action) => {
@@ -27,6 +28,11 @@ export default (state = INIT_STATE, action) => {
       return {
         ...INIT_STATE,
         willAuthenticate: false
+      }
+    case 'SOCKET_CONNECTED':
+      return {
+        ...state,
+        socket: action.payload.socket
       }
     default:
       return state

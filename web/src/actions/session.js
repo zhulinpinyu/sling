@@ -1,6 +1,24 @@
 import { reset } from 'redux-form'
+import { Socket } from 'phoenix'
 import api from '../api'
 import { fetchUserRooms } from './rooms'
+
+const API_URL = process.env.REACT_APP_API_URL
+const WS_URL = API_URL.replace(/(https|http)/, 'ws').replace('/api', '')
+
+const connectToSocket = (dispatch) => {
+  const token = JSON.parse(localStorage.getItem('token'))
+  const socket = new Socket(`${WS_URL}/socket`, {
+    params: { token },
+    logger: (kind, msg, data) => console.log(`${kind}: ${msg}`, data)
+  })
+  socket.connect()
+
+  dispatch({
+    type: 'SOCKET_CONNECTED',
+    payload: { socket }
+  })
+}
 
 const setCurrentUser = (dispatch, response) => {
   localStorage.setItem('token', JSON.stringify(response.meta.token))
@@ -9,6 +27,7 @@ const setCurrentUser = (dispatch, response) => {
     payload: response
   })
   dispatch(fetchUserRooms(response.data.id))
+  connectToSocket(dispatch)
 }
 
 export const login = (data, router) =>

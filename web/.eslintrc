@@ -13,7 +13,8 @@
     "space-before-blocks": 0,
     "keyword-spacing": 0,
     "comma-dangle": 0,
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "no-console": 0
   },
   "globals": {
     "fetch": true,
