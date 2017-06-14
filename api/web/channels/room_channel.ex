@@ -19,8 +19,9 @@ defmodule Sling.RoomChannel do
     {:ok, response, assign(socket, :room, room)}
   end
 
-  def handle_in('new_message', params, socket) do
-    changeset = socket.assigns.room
+  def handle_in("new_message", params, socket) do
+    changeset =
+      socket.assigns.room
       |> build_assoc(:messages, user_id: socket.assigns.current_user.id)
       |> Sling.Message.changeset(params)
 
