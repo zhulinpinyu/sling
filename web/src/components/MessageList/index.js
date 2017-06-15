@@ -50,6 +50,16 @@ class MessageList extends Component {
     onLoadMore: () => {}
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.messages.length !== this.props.messages){
+      this.scrollToBottom()
+    }
+  }
+
+  scrollToBottom = () => {
+    setTimeout(() => { this.container.scrollTop = this.container.scrollHeight });
+  }
+
   renderMessages(messages){
     return messages.map((message) => {
       return (
@@ -92,7 +102,7 @@ class MessageList extends Component {
   render() {
     const { loadingOlderMessages, moreMessages } = this.props
     return (
-      <div className={css(styles.container)}>
+      <div className={css(styles.container)} ref={(c) => { this.container = c }}>
         {
           moreMessages &&
           <div style={{ textAlign: 'center' }}>

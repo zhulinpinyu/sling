@@ -70,7 +70,7 @@ class Room extends Component {
 
   handleMessageCreate = (data) => {
     this.props.createMessage(this.props.channel, data)
-    this.messagelist.scrollBottom()
+    this.messagelist.scrollToBottom()
   }
 
   handleLoadMore = () => {
