@@ -1,5 +1,25 @@
 import { reset } from 'redux-form'
 import { Presence } from 'phoenix'
+import api from '../api'
+
+export const loadMoreMessages = (roomId, params) => {
+  return (dispatch) => {
+    dispatch({ type: 'FETCH_MESSAGES_REQUEST' })
+    return api.fetch(`/rooms/${roomId}/messages`, params)
+      .then((response) => {
+        dispatch({
+          type: 'FETCH_MESSAGES_SUCCESS',
+          payload: {
+            messages: response.messages,
+            pagination: response.pagination
+          }
+        })
+      })
+      .catch(() => {
+        dispatch({ type: 'FETCH_MESSAGES_FAILED' })
+      })
+  }
+}
 
 const syncPresentUsers = (dispatch, presences) => {
   const presentUsers = Presence.list(presences, (id, { metas: [first] }) => first.user)
@@ -40,7 +60,8 @@ export const connectToChannel = (socket, roomId) => {
         payload: {
           channel,
           room: response.room,
-          messages: response.messages
+          messages: response.messages,
+          pagination: response.pagination
         }
       })
     })
