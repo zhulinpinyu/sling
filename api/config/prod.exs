@@ -14,7 +14,7 @@ use Mix.Config
 config :sling, Sling.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "https://pacific-cove-84721.herokuapp.com/", port: 443],
-  cache_static_manifest: "priv/static/manifest.json"
+  cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
   check_origin: ["http://elixir-chat.surge.sh"]
 
