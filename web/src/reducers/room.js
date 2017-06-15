@@ -1,7 +1,8 @@
 const INIT_STATE = {
   channel: null,
   currentRoom: {},
-  messages: []
+  messages: [],
+  presentUsers: []
 }
 
 export default (state = INIT_STATE, action) => {
@@ -22,6 +23,11 @@ export default (state = INIT_STATE, action) => {
           ...state.messages,
           action.payload.message
         ]
+      }
+    case 'ROOM_PRESENCE_UPDATE':
+      return {
+        ...state,
+        presentUsers: action.payload.presentUsers
       }
     default:
       return state

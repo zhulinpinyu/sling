@@ -16,7 +16,7 @@ defmodule Sling.RoomChannel do
       pagination: Sling.PaginationHelpers.pagination(page)
     }
 
-    send(self, :after_join)
+    send(self(), :after_join)
     {:ok, response, assign(socket, :room, room)}
   end
 
