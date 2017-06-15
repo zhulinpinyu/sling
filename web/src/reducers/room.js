@@ -45,10 +45,10 @@ export default (state = INIT_STATE, action) => {
     case 'FETCH_MESSAGES_SUCCESS':
       return {
         ...state,
-        messages: {
+        messages: [
           ...action.payload.messages.reverse(),
           ...state.messages
-        },
+        ],
         loadingMoreMessages: false,
         pagination: action.payload.pagination
       }

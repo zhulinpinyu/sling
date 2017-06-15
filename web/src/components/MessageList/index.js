@@ -90,11 +90,11 @@ class MessageList extends Component {
   }
 
   render() {
-    const { loadingOlderMessages } = this.props
+    const { loadingOlderMessages, moreMessages } = this.props
     return (
       <div className={css(styles.container)}>
         {
-          this.props.moreMessages &&
+          moreMessages &&
           <div style={{ textAlign: 'center' }}>
             <button
               className="btn btn-link btn-sm"

@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { connectToChannel, leaveChannel, createMessage } from '../../actions/room'
+import {
+  connectToChannel,
+  leaveChannel,
+  createMessage,
+  loadMoreMessages
+} from '../../actions/room'
 import RoomNavBar from '../../components/RoomNavBar'
 import MessageList from '../../components/MessageList'
 import MessageForm from '../../components/MessageForm'
@@ -14,12 +19,15 @@ class Room extends Component {
     connectToChannel: PropTypes.func,
     leaveChannel: PropTypes.func,
     createMessage: PropTypes.func,
+    loadMoreMessages: PropTypes.func,
     socket: PropTypes.any,
     channel: PropTypes.any,
     room: PropTypes.object,
     messages: PropTypes.array,
     currentUser: PropTypes.object,
-    presentUsers: PropTypes.array
+    presentUsers: PropTypes.array,
+    pagination: PropTypes.object,
+    loadingOlderMessages: PropTypes.bool
   }
 
   static defaultProps = {
@@ -27,12 +35,15 @@ class Room extends Component {
     connectToChannel: () => {},
     leaveChannel: () => {},
     createMessage: () => {},
+    loadMoreMessages: () => {},
     room: {},
     messages: [],
     socket: null,
     channel: null,
     currentUser: {},
-    presentUsers: []
+    presentUsers: [],
+    pagination: {},
+    loadingOlderMessages: false
   }
 
   componentDidMount(){
@@ -57,10 +68,27 @@ class Room extends Component {
     this.props.leaveChannel(this.props.channel)
   }
 
-  handleMessageCreate = data => this.props.createMessage(this.props.channel, data)
+  handleMessageCreate = (data) => {
+    this.props.createMessage(this.props.channel, data)
+    this.messagelist.scrollBottom()
+  }
+
+  handleLoadMore = () => {
+    this.props.loadMoreMessages(
+      this.props.params.id,
+      { last_seen_id: this.props.messages[0].id }
+    )
+  }
 
   render() {
-    const { room, messages, currentUser, presentUsers } = this.props
+    const {
+      room,
+      messages,
+      currentUser,
+      presentUsers,
+      pagination: { total_pages, page_number },
+      loadingOlderMessages
+    } = this.props
     return (
       <div style={{ display: 'flex', height: '100vh' }}>
         <RoomSidebar
@@ -70,7 +98,13 @@ class Room extends Component {
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <RoomNavBar room={room} />
-          <MessageList messages={messages} />
+          <MessageList
+            moreMessages={total_pages > page_number}
+            messages={messages}
+            onLoadMore={this.handleLoadMore}
+            loadingOlderMessages={loadingOlderMessages}
+            ref={(c) => { this.messagelist = c }}
+          />
           <MessageForm onSubmit={this.handleMessageCreate} />
         </div>
       </div>
@@ -85,12 +119,15 @@ const mapStateToProps = ({ session, room }) => {
     channel: room.channel,
     messages: room.messages,
     currentUser: session.currentUser,
-    presentUsers: room.presentUsers
+    presentUsers: room.presentUsers,
+    pagination: room.pagination,
+    loadingOlderMessages: room.loadingOlderMessages
   }
 }
 
 export default connect(mapStateToProps, {
   connectToChannel,
   leaveChannel,
-  createMessage
+  createMessage,
+  loadMoreMessages
 })(Room)

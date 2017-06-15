@@ -18,7 +18,7 @@ defmodule Sling.MessageController do
     render(
       conn,
       "index.json",
-      %{messages: page.entries, paginate: Sling.PaginationHelpers.pagination(page)}
+      %{messages: page.entries, pagination: Sling.PaginationHelpers.pagination(page)}
     )
   end
 
