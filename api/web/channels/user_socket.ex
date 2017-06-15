@@ -5,7 +5,7 @@ defmodule Sling.UserSocket do
   channel "room:*", Sling.RoomChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport :websocket, Phoenix.Transports.WebSocket, timeout: 45_000
 
   def connect(%{"token" => token}, socket) do
     case Guardian.decode_and_verify(token) do
