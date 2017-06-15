@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   userList: {
     paddingLeft: '15px',
-    listStyles: 'none'
+    listStyle: 'none'
   },
   username: {
     position: 'relative',

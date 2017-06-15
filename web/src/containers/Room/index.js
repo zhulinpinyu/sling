@@ -6,6 +6,7 @@ import { connectToChannel, leaveChannel, createMessage } from '../../actions/roo
 import RoomNavBar from '../../components/RoomNavBar'
 import MessageList from '../../components/MessageList'
 import MessageForm from '../../components/MessageForm'
+import RoomSidebar from '../../components/RoomSidebar'
 
 class Room extends Component {
   static propTypes = {
@@ -16,7 +17,9 @@ class Room extends Component {
     socket: PropTypes.any,
     channel: PropTypes.any,
     room: PropTypes.object,
-    messages: PropTypes.array
+    messages: PropTypes.array,
+    currentUser: PropTypes.object,
+    presentUsers: PropTypes.array
   }
 
   static defaultProps = {
@@ -27,7 +30,9 @@ class Room extends Component {
     room: {},
     messages: [],
     socket: null,
-    channel: null
+    channel: null,
+    currentUser: {},
+    presentUsers: []
   }
 
   componentDidMount(){
@@ -55,9 +60,14 @@ class Room extends Component {
   handleMessageCreate = data => this.props.createMessage(this.props.channel, data)
 
   render() {
-    const { room, messages } = this.props
+    const { room, messages, currentUser, presentUsers } = this.props
     return (
       <div style={{ display: 'flex', height: '100vh' }}>
+        <RoomSidebar
+          room={room}
+          currentUser={currentUser}
+          presentUsers={presentUsers}
+        />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <RoomNavBar room={room} />
           <MessageList messages={messages} />
@@ -73,7 +83,9 @@ const mapStateToProps = ({ session, room }) => {
     socket: session.socket,
     room: room.currentRoom,
     channel: room.channel,
-    messages: room.messages
+    messages: room.messages,
+    currentUser: session.currentUser,
+    presentUsers: room.presentUsers
   }
 }
 
