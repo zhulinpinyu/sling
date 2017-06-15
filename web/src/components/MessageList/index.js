@@ -37,11 +37,17 @@ const styles = StyleSheet.create({
 
 class MessageList extends Component {
   static propTypes = {
-    messages: PropTypes.array
+    messages: PropTypes.array,
+    loadingOlderMessages: PropTypes.bool,
+    moreMessages: PropTypes.bool,
+    onLoadMore: PropTypes.func
   }
 
   static defaultProps = {
-    messages: []
+    messages: [],
+    loadingOlderMessages: false,
+    moreMessages: true,
+    onLoadMore: () => {}
   }
 
   renderMessages(messages){
@@ -84,8 +90,21 @@ class MessageList extends Component {
   }
 
   render() {
+    const { loadingOlderMessages } = this.props
     return (
       <div className={css(styles.container)}>
+        {
+          this.props.moreMessages &&
+          <div style={{ textAlign: 'center' }}>
+            <button
+              className="btn btn-link btn-sm"
+              onClick={this.props.onLoadMore}
+              disabled={loadingOlderMessages}
+            >
+              { loadingOlderMessages ? 'Loading' : 'Load More'}
+            </button>
+          </div>
+        }
         {this.renderDays()}
       </div>
     )
